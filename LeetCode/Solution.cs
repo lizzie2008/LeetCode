@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace LeetCode
 {
     class Solution
     {
-        #region RemoveDuplicates
+        #region Remove Duplicates from Sorted Array
 
         public int RemoveDuplicates(int[] nums)
         {
@@ -24,7 +25,7 @@ namespace LeetCode
 
         #endregion
 
-        #region RemoveDuplicates II
+        #region Remove Duplicates from Sorted Array II
 
         public int RemoveDuplicates2(int[] nums)
         {
@@ -39,7 +40,7 @@ namespace LeetCode
 
         #endregion
 
-        #region LongestConsecutive
+        #region Longest Consecutive Sequence
 
         public int LongestConsecutive(int[] nums)
         {
@@ -69,25 +70,19 @@ namespace LeetCode
 
         #endregion
 
-        #region TwoSum
+        #region Two Sum
 
         public int[] TwoSum(int[] nums, int target)
         {
-            int first, sencond;
+            var map = new Hashtable(); ;
             for (int i = 0; i < nums.Length; i++)
             {
-                first = nums[i];
-                for (int j = 0; j < nums.Length; j++)
+                int complement = target - nums[i];
+                if (map.ContainsKey(complement))
                 {
-                    if (i != j)
-                    {
-                        sencond = nums[j];
-                        if (first + sencond == target)
-                        {
-                            return new int[] { i, j };
-                        }
-                    }
+                    return new int[] { (int)map[complement], i };
                 }
+                map.Add(nums[i], i);
             }
             return null;
         }
