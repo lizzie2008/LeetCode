@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace LeetCode
 {
@@ -284,11 +286,63 @@ namespace LeetCode
             Reverse(nums, i + 1);
         }
 
+        #endregion
 
+        #region Permutation Sequence
+
+        public string GetPermutation(int n, int k)
+        {
+            var sb = new StringBuilder();
+            var nums = new List<int>();
+            //fact记录n的阶乘
+            int fact = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                fact *= i;
+                nums.Add(i);
+            }
+            for (int i = 0, l = k - 1; i < n; i++)
+            {
+                //计算组合内相对的下标
+                fact /= (n - i);
+                int index = (l / fact);
+                sb.Append(nums.ElementAt(index));
+                nums.Remove(nums.ElementAt(index));
+                //截取剩下的索引长度，用于下次遍历
+                l -= index * fact;
+            }
+            return sb.ToString();
+        }
 
         #endregion
 
+        #region Valid Sudoku
 
+        public bool IsValidSudoku(char[][] board)
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                HashSet<char> rows = new HashSet<char>();
+                HashSet<char> columns = new HashSet<char>();
+                HashSet<char> cube = new HashSet<char>();
+
+                for (int j = 0; j < 9; j++)
+                {
+                    //
+                    if (board[i][j] != '.' && !rows.Add(board[i][j]))
+                        return false;
+                    if (board[j][i] != '.' && !columns.Add(board[j][i]))
+                        return false;
+                    int RowIndex = 3 * (i / 3);
+                    int ColIndex = 3 * (i % 3);
+                    if (board[RowIndex + j / 3][ColIndex + j % 3] != '.' && !cube.Add(board[RowIndex + j / 3][ColIndex + j % 3]))
+                        return false;
+                }
+            }
+            return true;
+        }
+
+        #endregion
 
         #region 公共方法
 
