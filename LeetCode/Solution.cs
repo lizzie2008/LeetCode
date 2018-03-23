@@ -328,11 +328,13 @@ namespace LeetCode
 
                 for (int j = 0; j < 9; j++)
                 {
-                    //
+                    //行不能有重复元素
                     if (board[i][j] != '.' && !rows.Add(board[i][j]))
                         return false;
+                    //列不能有重复元素
                     if (board[j][i] != '.' && !columns.Add(board[j][i]))
                         return false;
+                    //验证九宫格里不能有重复元素
                     int RowIndex = 3 * (i / 3);
                     int ColIndex = 3 * (i % 3);
                     if (board[RowIndex + j / 3][ColIndex + j % 3] != '.' && !cube.Add(board[RowIndex + j / 3][ColIndex + j % 3]))
