@@ -346,6 +346,34 @@ namespace LeetCode
 
         #endregion
 
+        #region Trapping Rain Water
+
+        public int Trap(int[] height)
+        {
+            var n = height.Length;
+
+            int peak_index = 0; // 最高的柱子，将数组分为两半
+            for (int i = 0; i < n; i++)
+                if (height[i] > height[peak_index]) peak_index = i;
+
+            int ans = 0;
+            //最高柱子左侧遍历
+            for (int i = 0, left_peak = 0; i < peak_index; i++)
+            {
+                if (height[i] > left_peak) left_peak = height[i];
+                else ans += left_peak - height[i];
+            }
+            //最高柱子右侧遍历
+            for (int i = n - 1, right_peak = 0; i > peak_index; i--)
+            {
+                if (height[i] > right_peak) right_peak = height[i];
+                else ans += right_peak - height[i];
+            }
+            return ans;
+        }
+
+        #endregion
+
         #region 公共方法
 
         //逆置排序
