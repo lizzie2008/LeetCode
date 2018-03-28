@@ -71,6 +71,47 @@ namespace LeetCode
 
             //var retTrap = solution.Trap(new[] { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 });
             //Console.WriteLine($"Trap Result:{retTrap}");
+
+            //var matrix = new int[][]
+            //{
+            //    new int[] {1, 2, 3},
+            //    new int[] {4, 5, 6},
+            //    new int[] {7, 8, 9}
+            //};
+            //solution.Rotate(matrix);
+            //Console.WriteLine($"Rotate Result:");
+            //for (int i = 0; i < matrix.Length && i < matrix[i].Length; i++)
+            //{
+            //    Console.WriteLine(string.Join(",", matrix[i].Select(s => s.ToString()).ToArray()));
+            //}
+
+            //var retPlusOne = solution.PlusOne(new[] { 9, 9, 9, 9, 9 });
+            //Console.WriteLine($"PlusOne Result:{string.Join(",", retPlusOne.Select(s => s.ToString()).ToArray())}");
+
+
+            //var retClimbStairs = solution.ClimbStairs(2);
+            //Console.WriteLine($"ClimbStairs Result:{retClimbStairs}");
+
+            //var matrix = new int[][]
+            //{
+            //    new int[] {3, 2, 3, 0, 1},
+            //    new int[] {4, 5, 6, 6, 3},
+            //    new int[] {7, 0, 9, 8, 9},
+            //    new int[] {7, 8, 9, 8, 9}
+
+            //};
+            //solution.SetZeroes(matrix);
+            //Console.WriteLine($"SetZeroes Result:");
+            //for (int i = 0; i < matrix.Length && i < matrix[i].Length; i++)
+            //{
+            //    Console.WriteLine(string.Join(",", matrix[i].Select(s => s.ToString()).ToArray()));
+            //}
+
+            //var retCanCompleteCircuit = solution.CanCompleteCircuit(new[] { 5, 11, 9, 4, 3 }, new[] { 6, 7, 5, 9, 5 });
+            //Console.WriteLine($"CanCompleteCircuit Result:{retCanCompleteCircuit}");
+
+            //var retCandy = solution.Candy(new[] { 12, 4, 3, 11, 34, 34, 1, 67 });
+            //Console.WriteLine($"Candy Result:{retCandy}");
         }
 
     }

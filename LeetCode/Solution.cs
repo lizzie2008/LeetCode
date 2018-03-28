@@ -374,6 +374,169 @@ namespace LeetCode
 
         #endregion
 
+        #region Rotate Image
+
+        public void Rotate(int[][] matrix)
+        {
+            int n = matrix.Length;
+            /*
+            * 沿着副对角线反转，再沿着水平中线反转
+            * 1 2 3     9 6 3     7 4 1
+            * 4 5 6  => 8 5 2  => 8 5 2
+            * 7 8 9     7 4 1     9 6 3
+            */
+            for (int i = 0; i < n; ++i)
+                for (int j = 0; j < n - i; ++j)
+                    Swap(matrix, i, j, n - 1 - j, n - 1 - i);
+            for (int i = 0; i < n / 2; ++i)
+                for (int j = 0; j < n; ++j)
+                    Swap(matrix, i, j, n - 1 - i, j);
+        }
+
+        #endregion
+
+        #region Plus One
+
+        public int[] PlusOne(int[] digits)
+        {
+            //从数组最后一位计算
+            for (int i = digits.Length - 1; i >= 0; i--)
+            {
+                //如果不需要进位，加1后直接返回
+                if (digits[i] < 9)
+                {
+                    digits[i]++;
+                    return digits;
+                }
+
+                //数字9需要进位，加1后变0，高位继续加1
+                digits[i] = 0;
+            }
+
+            //最高位需要进位，如9999，最终应为10000
+            int[] newNumber = new int[digits.Length + 1];
+            newNumber[0] = 1;
+
+            return newNumber;
+        }
+
+        #endregion
+
+        #region Climbing Stairs
+
+        public int ClimbStairs(int n)
+        {
+            if (n == 1)
+            {
+                return 1;
+            }
+            int first = 1;
+            int second = 1;
+
+            for (int i = 2; i <= n; i++)
+            {
+                //f(n)=f(n-1)+f(n-2)
+                int third = first + second;
+                first = second;
+                second = third;
+            }
+            return second;
+        }
+
+        #endregion
+
+        #region Set Matrix Zeroes
+
+        public void SetZeroes(int[][] matrix)
+        {
+            //标记第0列
+            int col0 = 1;
+            int rows = matrix.Length;
+            int cols = matrix[0].Length;
+
+            //正向遍历，在第0行和第0列进行标记
+            for (int i = 0; i < rows; i++)
+            {
+                //如果第0列含有零元素
+                if (matrix[i][0] == 0) col0 = 0;
+                for (int j = 1; j < cols; j++)
+                    if (matrix[i][j] == 0)
+                        matrix[i][0] = matrix[0][j] = 0;
+            }
+            //反向遍历，将标记含零的行和列置零
+            for (int i = rows - 1; i >= 0; i--)
+            {
+                for (int j = cols - 1; j >= 1; j--)
+                    if (matrix[i][0] == 0 || matrix[0][j] == 0)
+                        matrix[i][j] = 0;
+                if (col0 == 0) matrix[i][0] = 0;
+            }
+        }
+
+        #endregion
+
+        #region Gas Station
+
+        public int CanCompleteCircuit(int[] gas, int[] cost)
+        {
+            int start = 0;
+            int total = 0;
+            int tank = 0;
+
+            for (int i = 0; i < gas.Length; i++)
+            {
+                //油不够到下一个站点，记录start下个站点
+                if ((tank = tank + gas[i] - cost[i]) < 0)
+                {
+                    start = i + 1;
+                    total += tank;
+                    tank = 0;
+                }
+            }
+            return (total + tank < 0) ? -1 : start;
+        }
+
+        #endregion
+
+        #region Candy
+
+        public int Candy(int[] ratings)
+        {
+            int sum = 0;
+            int[] left2right = new int[ratings.Length];
+            int[] right2left = new int[ratings.Length];
+            //默认每个小孩给1颗糖
+            for (int i = 0; i < ratings.Length; i++)
+            {
+                left2right[i] = 1;
+                right2left[i] = 1;
+            }
+            //正向扫描
+            for (int i = 1; i < ratings.Length; i++)
+            {
+                if (ratings[i] > ratings[i - 1])
+                {
+                    left2right[i] = left2right[i - 1] + 1;
+                }
+            }
+            //反向扫描
+            for (int i = ratings.Length - 2; i >= 0; i--)
+            {
+                if (ratings[i] > ratings[i + 1])
+                {
+                    right2left[i] = right2left[i + 1] + 1;
+                }
+            }
+            //比较正反扫描后，至少需要的糖的数量
+            for (int i = 0; i < ratings.Length; i++)
+            {
+                sum += Math.Max(left2right[i], right2left[i]);
+            }
+            return sum;
+        }
+
+        #endregion
+
         #region 公共方法
 
         //逆置排序
@@ -394,8 +557,14 @@ namespace LeetCode
             nums[i] = nums[j];
             nums[j] = temp;
         }
+        private void Swap(int[][] matrix,
+        int i, int j, int p, int q)
+        {
+            int tmp = matrix[i][j];
+            matrix[i][j] = matrix[p][q];
+            matrix[p][q] = tmp;
+        }
 
         #endregion
-
     }
 }
