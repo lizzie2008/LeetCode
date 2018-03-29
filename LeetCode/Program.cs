@@ -112,6 +112,13 @@ namespace LeetCode
 
             //var retCandy = solution.Candy(new[] { 12, 4, 3, 11, 34, 34, 1, 67 });
             //Console.WriteLine($"Candy Result:{retCandy}");
+
+            //var retMajorityElement = solution.MajorityElement(new[] { 1, 3, 3, 2, 3, 2, 3, 3, 4, 3 });
+            //Console.WriteLine($"MajorityElement Result:{retMajorityElement}");
+
+            //var nums = new[] { 1, 2, 3, 4, 5, 6, 7 };
+            //solution.Rotate(nums, 3);
+            //Console.WriteLine("Rotate Result: [" + string.Join(",", nums) + "]");
         }
 
     }

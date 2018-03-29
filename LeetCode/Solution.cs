@@ -283,7 +283,7 @@ namespace LeetCode
                 Swap(nums, i, j);
             }
             //逆置j之后的元素
-            Reverse(nums, i + 1);
+            Reverse(nums, i + 1, nums.Length);
         }
 
         #endregion
@@ -537,12 +537,59 @@ namespace LeetCode
 
         #endregion
 
+        #region Majority Element
+
+        public int MajorityElement(int[] nums)
+        {
+            int result = nums[0];
+            int count = 1;
+
+            foreach (var num in nums)
+            {
+                //如果count不是>0，替换成当前元素
+                if (count == 0)
+                {
+                    result = num;
+                    count += 1;
+                }
+                else if (result == num)
+                {
+                    //增加
+                    count += 1;
+                }
+                else
+                {
+                    //抵消
+                    count -= 1;
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region Rotate Array
+
+        public void Rotate(int[] nums, int k)
+        {
+            k %= nums.Length;
+            //逆置前n-k数组
+            Reverse(nums, 0, nums.Length - k);
+            //逆置后k数组
+            Reverse(nums, nums.Length - k, nums.Length);
+            //整体再逆置
+            Reverse(nums, 0, nums.Length);
+        }
+
+        #endregion
+
         #region 公共方法
 
-        //逆置排序
-        private void Reverse(int[] nums, int start)
+        //逆置排序 O(n)
+        private void Reverse(int[] nums, int start, int end)
         {
-            int i = start, j = nums.Length - 1;
+            int i = start, j = end - 1;
             while (i < j)
             {
                 Swap(nums, i, j);
