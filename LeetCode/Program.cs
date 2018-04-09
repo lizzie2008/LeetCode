@@ -119,6 +119,9 @@ namespace LeetCode
             //var nums = new[] { 1, 2, 3, 4, 5, 6, 7 };
             //solution.Rotate(nums, 3);
             //Console.WriteLine("Rotate Result: [" + string.Join(",", nums) + "]");
+
+            //var retContainsDuplicate = solution.ContainsDuplicate(new[] { 1, 2, 3, 4, 3, 6, 9 });
+            //Console.WriteLine($"ContainsDuplicate Result:{retContainsDuplicate}");
         }
 
     }

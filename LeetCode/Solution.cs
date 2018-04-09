@@ -584,6 +584,23 @@ namespace LeetCode
 
         #endregion
 
+        #region Contains Duplicate
+
+        public bool ContainsDuplicate(int[] nums)
+        {
+            var set = new HashSet<int>();
+            foreach (var num in nums)
+            {
+                //判断元素已存在
+                if (set.Contains(num)) return true;
+                set.Add(num);
+            }
+
+            return false;
+        }
+
+        #endregion
+
         #region 公共方法
 
         //逆置排序 O(n)
