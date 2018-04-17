@@ -601,6 +601,178 @@ namespace LeetCode
 
         #endregion
 
+        #region Contains Duplicate II
+
+        public bool ContainsNearbyDuplicate(int[] nums, int k)
+        {
+            var set = new HashSet<int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                //保证Hahs表中的所有元素满足与当前元素下标差不超过k
+                if (i > k) set.Remove(nums[i - k - 1]);
+                //判断是否有重复数据
+                if (!set.Add(nums[i])) return true;
+            }
+            return false;
+        }
+
+        #endregion
+
+        #region Contains Duplicate III
+
+        public bool ContainsNearbyAlmostDuplicate(int[] nums, int k, int t)
+        {
+            if (nums == null || nums.Length < 2 || k < 1 || t < 0)
+                return false;
+
+            var set = new SortedSet<int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int left = nums[i] - t;
+                int right = nums[i] + t;
+
+                //判断二叉树中是否满足与nums[i]绝对值之差最大为t的元素
+                var subSet = set.GetViewBetween(left, right);
+                if (subSet.Any())
+                    return true;
+                set.Add(nums[i]);
+
+                //大小为k的窗口向前移动
+                if (i >= k)
+                    set.Remove(nums[i - k]);
+            }
+            return false;
+        }
+
+        #endregion
+
+        #region Product of Array Except Self
+
+        public int[] ProductExceptSelf(int[] nums)
+        {
+            int n = nums.Length;
+            int[] res = new int[n];
+            res[0] = 1;
+            //先累计左侧乘积，左侧没有默认为1
+            for (int i = 1; i < n; i++)
+            {
+                res[i] = res[i - 1] * nums[i - 1];
+            }
+            int right = 1;
+            //再累计右侧乘积，右侧没有默认为1
+            for (int i = n - 1; i >= 0; i--)
+            {
+                res[i] *= right;
+                right *= nums[i];
+            }
+            return res;
+        }
+
+        #endregion
+
+        #region Game of Life
+
+        public void GameOfLife(int[,] board)
+        {
+            if (board == null || board.Length == 0) return;
+            int m = board.GetLength(0), n = board.GetLength(1);
+
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    int lives = LiveNeighbors(board, m, n, i, j);
+
+                    // 刚开始第2个bit为肯定是0，我们只用考虑2个bit变为1的情况
+                    if (board[i, j] == 1 && lives >= 2 && lives <= 3)
+                    {
+                        //编码: 01 ---> 11
+                        board[i, j] = 3;
+                    }
+                    if (board[i, j] == 0 && lives == 3)
+                    {
+                        //编码: 00 ---> 10
+                        board[i, j] = 2;
+                    }
+                }
+            }
+
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    //解码下一状态
+                    board[i, j] >>= 1;
+                }
+            }
+        }
+
+        public int LiveNeighbors(int[,] board, int m, int n, int i, int j)
+        {
+            int lives = 0;
+            for (int x = Math.Max(i - 1, 0); x <= Math.Min(i + 1, m - 1); x++)
+            {
+                for (int y = Math.Max(j - 1, 0); y <= Math.Min(j + 1, n - 1); y++)
+                {
+                    lives += board[x, y] & 1;
+                }
+            }
+            //解码当前状态，如果是存活状态，计数+1
+            lives -= board[i, j] & 1;
+            return lives;
+        }
+
+        #endregion
+
+        #region Increasing Triplet Subsequence
+
+        public bool IncreasingTriplet(int[] nums)
+        {
+            int x1 = Int32.MaxValue;
+            int x2 = Int32.MaxValue;
+            foreach (var num in nums)
+            {
+                //x1保存最小值
+                if (num <= x1)
+                {
+                    x1 = num;
+                }
+                //x2保存第二小值
+                else if (num <= x2)
+                {
+                    x2 = num;
+                }
+                //如果存在比x2还大的值，条件成立，返回true
+                else
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        #endregion
+
+        #region Reverse Linked List
+
+        public ListNode ReverseList(ListNode head)
+        {
+            ListNode reverse = null;
+            ListNode curr = head;
+            while (curr != null)
+            {
+                //移动节点
+                ListNode nextTemp = curr.next;
+                //将当前节点加到头结点位置，节点next为之前反转的单链表
+                curr.next = reverse;
+                reverse = curr;
+                curr = nextTemp;
+            }
+            return reverse;
+        }
+
+        #endregion
+
         #region 公共方法
 
         //逆置排序 O(n)
@@ -630,5 +802,15 @@ namespace LeetCode
         }
 
         #endregion
+
+        /// <summary>
+        /// 单链表
+        /// </summary>
+        public class ListNode
+        {
+            public int val;
+            public ListNode next;
+            public ListNode(int x) { val = x; }
+        }
     }
 }

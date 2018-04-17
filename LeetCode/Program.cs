@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using static LeetCode.Solution;
 
 namespace LeetCode
 {
@@ -120,8 +122,68 @@ namespace LeetCode
             //solution.Rotate(nums, 3);
             //Console.WriteLine("Rotate Result: [" + string.Join(",", nums) + "]");
 
-            //var retContainsDuplicate = solution.ContainsDuplicate(new[] { 1, 2, 3, 4, 3, 6, 9 });
+            //var retContainsDuplicate = solution.ContainsDuplicate(new[] { 1, 3, 2, 4, 3, 6, 9 });
             //Console.WriteLine($"ContainsDuplicate Result:{retContainsDuplicate}");
+
+            //var retContainsNearbyDuplicate = solution.ContainsNearbyDuplicate(new[] { 1, 3, 2, 4, 3, 6, 9 }, 2);
+            //Console.WriteLine($"ContainsDuplicate Result:{retContainsNearbyDuplicate}");
+
+            //var retContainsNearbyAlmostDuplicate = solution.ContainsNearbyAlmostDuplicate(new[] { 3, 4, 5, 6, 7, 8 }, 4, 3);
+            //Console.WriteLine($"ContainsNearbyAlmostDuplicate Result:{retContainsNearbyAlmostDuplicate}");
+
+            //var nums = solution.ProductExceptSelf(new[] { 1, 2, 3, 4 });
+            //Console.WriteLine("Rotate Result: [" + string.Join(",", nums) + "]");
+
+            //var board = new int[,]
+            //{
+            //    {1, 0, 1, 1, 0},
+            //    {0, 1, 0, 0, 1},
+            //    {0, 0, 1, 1, 0},
+            //    {0, 1, 0, 1, 0}
+            //};
+            //solution.GameOfLife(board);
+            //for (int i = 0; i < board.GetLength(0); i++)
+            //{
+            //    string str = "";//这里为什么要定义string 还是空的。
+            //    for (int j = 0; j < board.GetLength(1); j++)
+            //    {
+            //        str = str + Convert.ToString(board[i, j]) + " ";
+            //    }
+            //    Console.WriteLine(str);
+            //}
+
+            //var reIncreasingTriplet = solution.IncreasingTriplet(new[] { 1, 4, 3, 2, 3, 2, 3, });
+            //Console.WriteLine($"IncreasingTriplet Result:{reIncreasingTriplet}");
+
+
+            //var node1 = new ListNode(1);
+            //var node2 = new ListNode(2);
+            //var node3 = new ListNode(3);
+            //var node4 = new ListNode(4);
+            //node1.next = node2;
+            //node2.next = node3;
+            //node3.next = node4;
+            //Console.Write("原单链表：");
+            //PrintListNode(node1);
+            //var reReverseList = solution.ReverseList(node1);
+            //Console.Write("反转后单链表：");
+            //PrintListNode(reReverseList);
+        }
+
+        /// <summary>
+        /// 单链表打印
+        /// </summary>
+        /// <param name="node"></param>
+        private static void PrintListNode(ListNode node)
+        {
+            ListNode curr = node;
+            var outVals = new List<int>();
+            while (curr != null)
+            {
+                outVals.Add(curr.val);
+                curr = curr.next;
+            }
+            Console.WriteLine(string.Join(" -> ", outVals.Select(s => s.ToString())));
         }
 
     }
