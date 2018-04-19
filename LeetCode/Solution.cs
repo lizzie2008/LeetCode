@@ -773,7 +773,435 @@ namespace LeetCode
 
         #endregion
 
-        #region 公共方法
+        #region Reverse Linked List II
+
+        public ListNode ReverseBetween(ListNode head, int m, int n)
+        {
+            if (head == null) return null;
+            //创建一个头结点，默认指向初始链表
+            ListNode dummy = new ListNode(0);
+            dummy.next = head;
+            //声明pre指针，将pre移动到链表m位置
+            ListNode pre = dummy;
+            for (int i = 0; i < m - 1; i++) pre = pre.next;
+
+            //记录m位置的元素节点->start
+            ListNode start = pre.next;
+            //记录m+1位置的元素节点->then
+            ListNode then = start.next;
+
+            //反转m到n元素（头插法）
+            for (int i = 0; i < n - m; i++)
+            {
+                start.next = then.next;
+                then.next = pre.next;
+                pre.next = then;
+                then = start.next;
+            }
+
+            return dummy.next;
+        }
+
+        #endregion
+
+        #region Odd Even Linked List
+
+        public ListNode OddEvenList(ListNode head)
+        {
+            if (head != null)
+            {
+                //声明奇数链表，偶数链表，并保存偶数链表头结点位置
+                ListNode odd = head, even = head.next, evenHead = even;
+
+                while (even != null && even.next != null)
+                {
+                    //当前元素的下个元素指向下个元素的下个元素
+                    odd.next = odd.next.next;
+                    even.next = even.next.next;
+                    //向后移动当前元素
+                    odd = odd.next;
+                    even = even.next;
+                }
+                //奇数链表，偶数链表收尾相连
+                odd.next = evenHead;
+            }
+            return head;
+        }
+
+        #endregion
+
+        #region Add Two Numbers
+
+        public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
+        {
+            //接收返回的链表
+            ListNode dummyHead = new ListNode(0);
+            ListNode p = l1, q = l2, curr = dummyHead;
+            //进位
+            int carry = 0;
+
+            while (p != null || q != null)
+            {
+                //判断有没有值，没有值默认赋0
+                int x = (p != null) ? p.val : 0;
+                int y = (q != null) ? q.val : 0;
+                //对应值之和（包括进位）
+                int sum = carry + x + y;
+                carry = sum / 10;
+                curr.next = new ListNode(sum % 10);
+                curr = curr.next;
+                if (p != null) p = p.next;
+                if (q != null) q = q.next;
+            }
+            //最后节点有进位情况
+            if (carry > 0)
+            {
+                curr.next = new ListNode(carry);
+            }
+            return dummyHead.next;
+        }
+
+        #endregion
+
+        #region Partition List
+
+        public ListNode Partition(ListNode head, int x)
+        {
+            //接收小于目标值的链表和大于等于目标值的链表
+            ListNode left_dummy = new ListNode(-1); // 头结点
+            ListNode right_dummy = new ListNode(-1); // 头结点
+            ListNode left_cur = left_dummy;
+            ListNode right_cur = right_dummy;
+
+            for (ListNode cur = head; cur != null; cur = cur.next)
+            {
+                if (cur.val < x)
+                {
+                    left_cur.next = cur;
+                    left_cur = cur;
+                }
+                else
+                {
+                    right_cur.next = cur;
+                    right_cur = cur;
+                }
+            }
+            //组个2个链表
+            left_cur.next = right_dummy.next;
+            right_cur.next = null;
+            return left_dummy.next;
+        }
+
+        #endregion
+
+        #region Remove Duplicates from Sorted List
+
+        public ListNode DeleteDuplicates(ListNode head)
+        {
+            ListNode current = head;
+            while (current != null && current.next != null)
+            {
+                //移除相邻重复的元素，即指向下下个元素
+                if (current.next.val == current.val)
+                {
+                    current.next = current.next.next;
+                }
+                else
+                {
+                    current = current.next;
+                }
+            }
+            return head;
+        }
+
+        #endregion
+
+        #region Remove Duplicates from Sorted List II
+
+        public ListNode DeleteDuplicates2(ListNode head)
+        {
+            if (head == null) return null;
+            ListNode dummy = new ListNode(0);
+            dummy.next = head;
+            ListNode pre = dummy;
+            ListNode cur = head;
+
+            while (cur != null)
+            {
+                //如果相邻元素相等，继续移动游标
+                while (cur.next != null && cur.val == cur.next.val)
+                {
+                    cur = cur.next;
+                }
+                if (pre.next == cur)
+                {
+                    //没有重复元素，pre向后移动一位
+                    pre = pre.next;
+                }
+                else
+                {
+                    //删除中间重复的元素
+                    pre.next = cur.next;
+                }
+                cur = cur.next;
+            }
+            return dummy.next;
+        }
+
+        #endregion
+
+        #region Rotate List
+
+        public ListNode RotateRight(ListNode head, int k)
+        {
+            if (head == null || k == 0) return head;
+            int len = 1;
+            ListNode p = head;
+            while (p.next != null)
+            {
+                // 求长度
+                len++;
+                p = p.next;
+            }
+
+            k = len - k % len;
+            // 首尾相连，形成循环链表
+            p.next = head;
+            for (int step = 0; step < k; step++)
+            {
+                p = p.next;
+            }
+            // 新的首节点
+            head = p.next;
+            // 断开循环链表
+            p.next = null;
+            return head;
+        }
+
+        #endregion
+
+        #region Remove Nth Node From End of List
+
+        public ListNode RemoveNthFromEnd(ListNode head, int n)
+        {
+            ListNode dummy = new ListNode(0);
+            dummy.next = head;
+            ListNode p = dummy, q = dummy;
+            // q先走n步
+            for (int i = 0; i < n; i++)
+                q = q.next;
+            while (q.next != null)
+            {
+                // p,q一起走
+                p = p.next;
+                q = q.next;
+            }
+            p.next = p.next.next;
+            return dummy.next;
+        }
+
+        #endregion
+
+        #region Swap Nodes in Pairs
+
+        public ListNode SwapPairs(ListNode head)
+        {
+            //示例：1->2->3->4->Ø
+            if ((head == null) || (head.next == null))
+                return head;
+
+            //n=2
+            ListNode n = head.next;
+            //1->SwapPairs(3->4->Ø) => 1->4->3
+            head.next = SwapPairs(head.next.next);
+            //2->1->4->3
+            n.next = head;
+            return n;
+        }
+
+        #endregion
+
+        #region Reverse Nodes in k-Group
+
+        public ListNode ReverseKGroup(ListNode head, int k)
+        {
+            ListNode curr = head;
+            int count = 0;
+            while (curr != null && count != k)
+            {
+                // 找到第 k+1 个节点
+                curr = curr.next;
+                count++;
+            }
+            if (count == k)
+            {
+                // 如果第 k+1 个节点存在，递归反转后续链表
+                curr = ReverseKGroup(curr, k);
+
+                //将链表前 k 个元素逆转
+                while (count-- > 0)
+                {
+                    ListNode tmp = head.next;
+                    head.next = curr;
+                    curr = head;
+                    head = tmp;
+                }
+                head = curr;
+            }
+            return head;
+        }
+
+
+        #endregion
+
+        #region Copy List with Random Pointer
+
+        public RandomListNode CopyRandomList(RandomListNode head)
+        {
+            RandomListNode iter = head, next;
+
+            // 第1步: 遍历原链表，拷贝每个节点，并将拷贝后的节点插入原先节点之后
+            while (iter != null)
+            {
+                next = iter.next;
+
+                RandomListNode copyNode = new RandomListNode(iter.label);
+                iter.next = copyNode;
+                copyNode.next = next;
+
+                iter = next;
+            }
+
+            // 第2步: 遍历新链表，将随机节点指针赋值给拷贝后的节点
+            iter = head;
+            while (iter != null)
+            {
+                if (iter.random != null)
+                {
+                    iter.next.random = iter.random.next;
+                }
+                iter = iter.next.next;
+            }
+
+            // 第3步: 复原原链表，并构造新的深拷贝链表
+            iter = head;
+            RandomListNode pseudoHead = new RandomListNode(0);
+            RandomListNode copy, copyIter = pseudoHead;
+
+            while (iter != null)
+            {
+                next = iter.next.next;
+
+                copy = iter.next;
+                copyIter.next = copy;
+                copyIter = copy;
+
+                iter.next = next;
+
+                iter = next;
+            }
+
+            return pseudoHead.next;
+        }
+
+        #endregion
+
+        #region Linked List Cycle
+
+        public bool HasCycle(ListNode head)
+        {
+            // 设置两个指针，一个快一个慢
+            ListNode slow = head, fast = head;
+            while (fast != null && fast.next != null)
+            {
+                slow = slow.next;
+                fast = fast.next.next;
+                if (slow == fast) return true;
+            }
+            return false;
+        }
+
+        #endregion
+
+        #region Linked List Cycle II
+
+        public ListNode DetectCycle(ListNode head)
+        {
+            if ( head.next == null) return null;
+
+            ListNode firstp = head;
+            ListNode secondp = head;
+            bool isCycle = false;
+
+            //设置快慢指针，如果指针相遇，则说明有环
+            while (firstp != null && secondp != null)
+            {
+                firstp = firstp.next;
+                if (secondp.next == null) return null;
+                secondp = secondp.next.next;
+                if (firstp == secondp) { isCycle = true; break; }
+            }
+
+            if (!isCycle) return null;
+            firstp = head;
+            //再设置慢指针从起点出发，原慢指针继续从相遇点出发
+            while (firstp != secondp)
+            {
+                firstp = firstp.next;
+                secondp = secondp.next;
+            }
+
+            return firstp;
+        }
+
+        #endregion
+
+        #region Reorder List
+
+        public void ReorderList(ListNode head)
+        {
+            if (head == null || head.next == null) return;
+
+            // 使用快慢指针，找到中间节点
+            ListNode p1 = head;
+            ListNode p2 = head;
+            while (p2.next != null && p2.next.next != null)
+            {
+                p1 = p1.next;
+                p2 = p2.next.next;
+            }
+
+            //中间节点之后的链表反转
+            ListNode preMiddle = p1;
+            ListNode preCurrent = p1.next;
+            while (preCurrent.next != null)
+            {
+                ListNode current = preCurrent.next;
+                preCurrent.next = current.next;
+                current.next = preMiddle.next;
+                preMiddle.next = current;
+            }
+
+            //重组链表
+            p1 = head;
+            p2 = preMiddle.next;
+            while (p1 != preMiddle)
+            {
+                preMiddle.next = p2.next;
+                p2.next = p1.next;
+                p1.next = p2;
+                p1 = p2.next;
+                p2 = preMiddle.next;
+            }
+        }
+
+        #endregion
+
+
+
+
+
+        #region Public Methords
 
         //逆置排序 O(n)
         private void Reverse(int[] nums, int start, int end)
@@ -803,6 +1231,8 @@ namespace LeetCode
 
         #endregion
 
+        #region public Definitions
+
         /// <summary>
         /// 单链表
         /// </summary>
@@ -812,5 +1242,16 @@ namespace LeetCode
             public ListNode next;
             public ListNode(int x) { val = x; }
         }
+        /// <summary>
+        /// 带随机指针的链表
+        /// </summary>
+        public class RandomListNode
+        {
+            public int label;
+            public RandomListNode next, random;
+            public RandomListNode(int x) { this.label = x; }
+        };
+        #endregion
+
     }
 }

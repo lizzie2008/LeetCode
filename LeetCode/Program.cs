@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using static LeetCode.Solution;
 
@@ -156,20 +157,107 @@ namespace LeetCode
             //Console.WriteLine($"IncreasingTriplet Result:{reIncreasingTriplet}");
 
 
-            //var node1 = new ListNode(1);
-            //var node2 = new ListNode(2);
-            //var node3 = new ListNode(3);
-            //var node4 = new ListNode(4);
-            //node1.next = node2;
-            //node2.next = node3;
-            //node3.next = node4;
+            //var head = CreateListNodes(new[] { 1, 2, 3, 4 });
             //Console.Write("原单链表：");
-            //PrintListNode(node1);
-            //var reReverseList = solution.ReverseList(node1);
+            //PrintListNode(head);
+            //var reReverseList = solution.ReverseList(head);
             //Console.Write("反转后单链表：");
             //PrintListNode(reReverseList);
+
+            //var head = CreateListNodes(new[] { 1, 2, 3, 4, 5 });
+            //var retReverseBetween = solution.ReverseBetween(head, 2, 4);
+            //Console.Write("ReverseBetween：");
+            //PrintListNode(retReverseBetween);
+
+            //var head = CreateListNodes(new[] { 1,2,3,4,5 });
+            //var retOddEvenList = solution.OddEvenList(head);
+            //Console.Write("retOddEvenList：");
+            //PrintListNode(retOddEvenList);
+
+            //var l1 = CreateListNodes(new[] { 2, 4, 3 });
+            //var l2 = CreateListNodes(new[] { 5, 6, 4 });
+            //var retAddTwoNumbers = solution.AddTwoNumbers(l1,l2);
+            //Console.Write("AddTwoNumbers：");
+            //PrintListNode(retAddTwoNumbers);
+
+            //var head = CreateListNodes(new[] { 1, 4, 3, 2, 5, 2 });
+            //var retPartition = solution.Partition(head,3);
+            //Console.Write("Partition：");
+            //PrintListNode(retPartition);
+
+            //var head = CreateListNodes(new[] { 1, 1, 2, 3, 3 });
+            //var retDeleteDuplicates = solution.DeleteDuplicates(head);
+            //Console.Write("DeleteDuplicates：");
+            //PrintListNode(retDeleteDuplicates);
+
+            //var head = CreateListNodes(new[] { 1, 1, 1, 2, 3 });
+            //var retDeleteDuplicates2 = solution.DeleteDuplicates2(head);
+            //Console.Write("DeleteDuplicates2：");
+            //PrintListNode(retDeleteDuplicates2);
+
+            //var head = CreateListNodes(new[] { 1, 2, 3, 4, 5 });
+            //var retRotateRight = solution.RotateRight(head, 2);
+            //Console.Write("RotateRight：");
+            //PrintListNode(retRotateRight);
+
+            //var head = CreateListNodes(new[] { 1, 2, 3, 4, 5 });
+            //var retRemoveNthFromEnd = solution.RemoveNthFromEnd(head, 2);
+            //Console.Write("RemoveNthFromEnd：");
+            //PrintListNode(retRemoveNthFromEnd);
+
+            //var head = CreateListNodes(new[] { 1, 2, 3, 4 });
+            //var retSwapPairs = solution.SwapPairs(head);
+            //Console.Write("SwapPairs：");
+            //PrintListNode(retSwapPairs);
+
+            //var head = CreateListNodes(new[] { 1, 2, 3, 4, 5 });
+            //var retReverseKGroup = solution.ReverseKGroup(head, 3);
+            //Console.Write("ReverseKGroup：");
+            //PrintListNode(retReverseKGroup);
+
+            //var head = CreateRandomListNodes(new[] { 1, 2, 3, 4, 5 });
+            //Console.Write("原链表：");
+            //PrintRandomListNode(head);
+            //var retCopyRandomList = solution.CopyRandomList(head);
+            //Console.Write("深拷贝链表：");
+            //PrintRandomListNode(retCopyRandomList);
+
+            //var head = CreateListNodes(new[] { 1, 2, 3, 4, 5 });
+            //head.next.next.next.next.next = head.next.next;
+            //var retHasCycle = solution.HasCycle(head);
+            //Console.WriteLine($"HasCycle Result:{retHasCycle}");
+
+            //var head = CreateListNodes(new[] { 1, 2, 3, 4, 5 });
+            //head.next.next.next.next.next = head.next.next;
+            //var retDetectCycle = solution.DetectCycle(head);
+            //Console.WriteLine($"DetectCycle Result:{retDetectCycle.val}");
+
+            //var head = CreateListNodes(new[] { 1, 2, 3, 4, 5, 6 });
+            //solution.ReorderList(head);
+            //Console.Write("ReorderList：");
+            //PrintListNode(head);
         }
 
+
+        #region HelperMethords
+
+
+        /// <summary>
+        /// 通过数组构建链表
+        /// </summary>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        private static ListNode CreateListNodes(int[] vals)
+        {
+            var dummy = new ListNode(0);
+            var curr = dummy;
+            for (int i = 0; i < vals.Length; i++)
+            {
+                curr.next = new ListNode(vals[i]);
+                curr = curr.next;
+            }
+            return dummy.next;
+        }
         /// <summary>
         /// 单链表打印
         /// </summary>
@@ -185,6 +273,52 @@ namespace LeetCode
             }
             Console.WriteLine(string.Join(" -> ", outVals.Select(s => s.ToString())));
         }
+        /// <summary>
+        /// 通过数组构建带随机指针的链表
+        /// </summary>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        private static RandomListNode CreateRandomListNodes(int[] vals)
+        {
+            var dummy = new RandomListNode(0);
+            var nodeList = new List<RandomListNode>();
+            var curr = dummy;
+            for (int i = 0; i < vals.Length; i++)
+            {
+                curr.next = new RandomListNode(vals[i]);
+                nodeList.Add(curr.next);
+                curr = curr.next;
+            }
+            nodeList.Add(null);
+            curr = dummy;
 
+            var random = new Random();
+            while (curr.next != null)
+            {
+                var rdm = random.Next(0, nodeList.Count);
+                curr.next.random = nodeList.ElementAt(rdm);
+                curr = curr.next;
+            }
+
+            return dummy.next;
+        }
+        /// <summary>
+        /// 带随机指针的链表打印
+        /// </summary>
+        /// <param name="node"></param>
+        private static void PrintRandomListNode(RandomListNode node)
+        {
+            RandomListNode curr = node;
+            var outVals = new List<string>();
+            while (curr != null)
+            {
+                var randomLable = curr.random == null ? "NULL" : curr.random.label.ToString();
+                outVals.Add(curr.label + "[" + randomLable + "]");
+                curr = curr.next;
+            }
+            Console.WriteLine(string.Join(" -> ", outVals));
+        }
+
+        #endregion
     }
 }
