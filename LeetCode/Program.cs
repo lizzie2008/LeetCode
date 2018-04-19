@@ -156,19 +156,47 @@ namespace LeetCode
             //Console.WriteLine($"IncreasingTriplet Result:{reIncreasingTriplet}");
 
 
-            //var node1 = new ListNode(1);
-            //var node2 = new ListNode(2);
-            //var node3 = new ListNode(3);
-            //var node4 = new ListNode(4);
-            //node1.next = node2;
-            //node2.next = node3;
-            //node3.next = node4;
+            //var head = CreateListNodes(new[] { 1, 2, 3, 4 });
             //Console.Write("原单链表：");
-            //PrintListNode(node1);
-            //var reReverseList = solution.ReverseList(node1);
+            //PrintListNode(head);
+            //var reReverseList = solution.ReverseList(head);
             //Console.Write("反转后单链表：");
             //PrintListNode(reReverseList);
+
+            //var head = CreateListNodes(new[] { 1, 2, 3, 4, 5 });
+            //var retReverseBetween = solution.ReverseBetween(head, 2, 4);
+            //Console.Write("ReverseBetween：");
+            //PrintListNode(retReverseBetween);
+
+            //var head = CreateListNodes(new[] { 1,2,3,4,5 });
+            //var retOddEvenList = solution.OddEvenList(head);
+            //Console.Write("retOddEvenList：");
+            //PrintListNode(retOddEvenList);
+
+            //var l1 = CreateListNodes(new[] { 2, 4, 3 });
+            //var l2 = CreateListNodes(new[] { 5, 6, 4 });
+            //var retAddTwoNumbers = solution.AddTwoNumbers(l1,l2);
+            //Console.Write("AddTwoNumbers：");
+            //PrintListNode(retAddTwoNumbers);
+
+            //var head = CreateListNodes(new[] { 1, 4, 3, 2, 5, 2 });
+            //var retPartition = solution.Partition(head,3);
+            //Console.Write("Partition：");
+            //PrintListNode(retPartition);
+
+            //var head = CreateListNodes(new[] { 1, 1, 2, 3, 3 });
+            //var retDeleteDuplicates = solution.DeleteDuplicates(head);
+            //Console.Write("DeleteDuplicates：");
+            //PrintListNode(retDeleteDuplicates);
+
+            var head = CreateListNodes(new[] { 1, 1, 1, 2, 3 });
+            var retDeleteDuplicates2 = solution.DeleteDuplicates2(head);
+            Console.Write("DeleteDuplicates2：");
+            PrintListNode(retDeleteDuplicates2);
         }
+
+
+        #region HelperMethords
 
         /// <summary>
         /// 单链表打印
@@ -185,6 +213,25 @@ namespace LeetCode
             }
             Console.WriteLine(string.Join(" -> ", outVals.Select(s => s.ToString())));
         }
+        /// <summary>
+        /// 通过数组构建链表
+        /// </summary>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        private static ListNode CreateListNodes(int[] vals)
+        {
+            var head = new ListNode(vals[0]);
+            var curr = head;
+            for (int i = 1; i < vals.Length; i++)
+            {
+                curr.next = new ListNode(vals[i]);
+                curr = curr.next;
+            }
+            return head;
+        }
+
+        #endregion
+
 
     }
 }

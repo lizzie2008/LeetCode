@@ -773,6 +773,183 @@ namespace LeetCode
 
         #endregion
 
+        #region Reverse Linked List II
+
+        public ListNode ReverseBetween(ListNode head, int m, int n)
+        {
+            if (head == null) return null;
+            //创建一个头结点，默认指向初始链表
+            ListNode dummy = new ListNode(0);
+            dummy.next = head;
+            //声明pre指针，将pre移动到链表m位置
+            ListNode pre = dummy;
+            for (int i = 0; i < m - 1; i++) pre = pre.next;
+
+            //记录m位置的元素节点->start
+            ListNode start = pre.next;
+            //记录m+1位置的元素节点->then
+            ListNode then = start.next;
+
+            //反转m到n元素（头插法）
+            for (int i = 0; i < n - m; i++)
+            {
+                start.next = then.next;
+                then.next = pre.next;
+                pre.next = then;
+                then = start.next;
+            }
+
+            return dummy.next;
+        }
+
+        #endregion
+
+        #region Odd Even Linked List
+
+        public ListNode OddEvenList(ListNode head)
+        {
+            if (head != null)
+            {
+                //声明奇数链表，偶数链表，并保存偶数链表头结点位置
+                ListNode odd = head, even = head.next, evenHead = even;
+
+                while (even != null && even.next != null)
+                {
+                    //当前元素的下个元素指向下个元素的下个元素
+                    odd.next = odd.next.next;
+                    even.next = even.next.next;
+                    //向后移动当前元素
+                    odd = odd.next;
+                    even = even.next;
+                }
+                //奇数链表，偶数链表收尾相连
+                odd.next = evenHead;
+            }
+            return head;
+        }
+
+        #endregion
+
+        #region Add Two Numbers
+
+        public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
+        {
+            //接收返回的链表
+            ListNode dummyHead = new ListNode(0);
+            ListNode p = l1, q = l2, curr = dummyHead;
+            //进位
+            int carry = 0;
+
+            while (p != null || q != null)
+            {
+                //判断有没有值，没有值默认赋0
+                int x = (p != null) ? p.val : 0;
+                int y = (q != null) ? q.val : 0;
+                //对应值之和（包括进位）
+                int sum = carry + x + y;
+                carry = sum / 10;
+                curr.next = new ListNode(sum % 10);
+                curr = curr.next;
+                if (p != null) p = p.next;
+                if (q != null) q = q.next;
+            }
+            //最后节点有进位情况
+            if (carry > 0)
+            {
+                curr.next = new ListNode(carry);
+            }
+            return dummyHead.next;
+        }
+
+        #endregion
+
+        #region Partition List
+
+        public ListNode Partition(ListNode head, int x)
+        {
+            //接收小于目标值的链表和大于等于目标值的链表
+            ListNode left_dummy = new ListNode(-1); // 头结点
+            ListNode right_dummy = new ListNode(-1); // 头结点
+            ListNode left_cur = left_dummy;
+            ListNode right_cur = right_dummy;
+
+            for (ListNode cur = head; cur != null; cur = cur.next)
+            {
+                if (cur.val < x)
+                {
+                    left_cur.next = cur;
+                    left_cur = cur;
+                }
+                else
+                {
+                    right_cur.next = cur;
+                    right_cur = cur;
+                }
+            }
+            //组个2个链表
+            left_cur.next = right_dummy.next;
+            right_cur.next = null;
+            return left_dummy.next;
+        }
+
+        #endregion
+
+        #region Remove Duplicates from Sorted List
+
+        public ListNode DeleteDuplicates(ListNode head)
+        {
+            ListNode current = head;
+            while (current != null && current.next != null)
+            {
+                //移除相邻重复的元素，即指向下下个元素
+                if (current.next.val == current.val)
+                {
+                    current.next = current.next.next;
+                }
+                else
+                {
+                    current = current.next;
+                }
+            }
+            return head;
+        }
+
+        #endregion
+
+        #region Remove Duplicates from Sorted List II
+
+        public ListNode DeleteDuplicates2(ListNode head)
+        {
+            if (head == null) return null;
+            ListNode dummy = new ListNode(0);
+            dummy.next = head;
+            ListNode pre = dummy;
+            ListNode cur = head;
+
+            while (cur != null)
+             {
+                //如果相邻元素相等，继续移动游标
+                while (cur.next != null && cur.val == cur.next.val)
+                {
+                    cur = cur.next;
+                }
+                if (pre.next == cur)
+                {
+                    //没有重复元素，pre向后移动一位
+                    pre = pre.next;
+                }
+                else
+                {
+                    //删除中间重复的元素
+                    pre.next = cur.next;
+                }
+                cur = cur.next;
+            }
+            return dummy.next;
+        }
+
+        #endregion
+
         #region 公共方法
 
         //逆置排序 O(n)
