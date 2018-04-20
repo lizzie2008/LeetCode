@@ -236,12 +236,11 @@ namespace LeetCode
             //solution.ReorderList(head);
             //Console.Write("ReorderList：");
             //PrintListNode(head);
+
         }
 
 
         #region HelperMethords
-
-
         /// <summary>
         /// 通过数组构建链表
         /// </summary>

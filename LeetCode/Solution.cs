@@ -1127,7 +1127,7 @@ namespace LeetCode
 
         public ListNode DetectCycle(ListNode head)
         {
-            if ( head.next == null) return null;
+            if (head.next == null) return null;
 
             ListNode firstp = head;
             ListNode secondp = head;
@@ -1202,7 +1202,6 @@ namespace LeetCode
 
 
         #region Public Methords
-
         //逆置排序 O(n)
         private void Reverse(int[] nums, int start, int end)
         {
